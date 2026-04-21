@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Elizabeth ❤️</title>
+
+<style>
+body {
+  margin: 0;
+  overflow: hidden;
+  background: black;
+  font-family: Arial;
+}
+
+h1 {
+  position: absolute;
+  width: 100%;
+  top: 30%;
+  text-align: center;
+  color: white;
+  font-size: 50px;
+  z-index: 2;
+}
+
+h2 {
+  position: absolute;
+  width: 100%;
+  top: 45%;
+  text-align: center;
+  color: #ff4d6d;
+  font-size: 30px;
+  z-index: 2;
+}
+
+button {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 15px 25px;
+  border: none;
+  background: #ff4d6d;
+  color: white;
+  font-size: 18px;
+  border-radius: 30px;
+  cursor: pointer;
+  z-index: 2;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Elizabeth ❤️</h1>
+<h2>I love you</h2>
+<button onclick="playMusic()">Play Music 🎶</button>
+
+<audio id="music" loop>
+  <source src="https://files.catbox.moe/7p6k0x.mp3" type="audio/mp3">
+</audio>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<script>
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+// Corações 3D
+const hearts = [];
+for (let i = 0; i < 50; i++) {
+  const geometry = new THREE.SphereGeometry(0.2, 16, 16);
+  const material = new THREE.MeshBasicMaterial({ color: 0xff4d6d });
+  const heart = new THREE.Mesh(geometry, material);
+
+  heart.position.x = (Math.random() - 0.5) * 10;
+  heart.position.y = (Math.random() - 0.5) * 10;
+  heart.position.z = (Math.random() - 0.5) * 10;
+
+  scene.add(heart);
+  hearts.push(heart);
+}
+
+camera.position.z = 5;
+
+function animate() {
+  requestAnimationFrame(animate);
+
+  hearts.forEach(h => {
+    h.rotation.x += 0.01;
+    h.rotation.y += 0.01;
+    h.position.y += 0.01;
+
+    if (h.position.y > 5) {
+      h.position.y = -5;
+    }
+  });
+
+  renderer.render(scene, camera);
+}
+
+animate();
+
+// Música
+function playMusic() {
+  document.getElementById("music").play();
+}
+</script>
+
+</body>
+</html>
